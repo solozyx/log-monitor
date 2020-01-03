@@ -19,6 +19,8 @@ type ReadFromFile struct {
 
 // func (r *ReadFromFile) Read(rc chan string) {
 func (r *ReadFromFile) Read(rc chan []byte) {
+	// TODO : 生产环境 日志按 天 周 切割
+	//  打开新的日志文件,重新给 f rd 赋值
 	f, err := os.Open(r.path)
 	if err != nil {
 		panic(fmt.Sprintf("open file error:%s", err.Error()))
@@ -40,6 +42,7 @@ func (r *ReadFromFile) Read(rc chan []byte) {
 		} else if err != nil {
 			panic(fmt.Sprintf("ReadBytes error:%s", err.Error()))
 		}
+		// 读取到1行日志数据
 		TypeMonitorChan <- TypeHandleLine
 		// 去掉读取内容最后的\n符 投递channel
 		rc <- line[:len(line)-1]

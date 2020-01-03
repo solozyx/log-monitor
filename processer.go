@@ -44,6 +44,7 @@ func (l *LogProcess) Process() {
 		ret := r.FindStringSubmatch(string(v))
 		//
 		if len(ret) != 14 {
+			// 解析1行日志错误
 			TypeMonitorChan <- TypeErrNum
 			log.Println("processor FindStringSubmatch fail:", string(v))
 			continue
@@ -53,6 +54,7 @@ func (l *LogProcess) Process() {
 		// 04/Mar/2018:13:49:52 +0000
 		t, err := time.ParseInLocation(GoTimeParseSeed, ret[4], loc)
 		if err != nil {
+			// 解析访问时间错误
 			TypeMonitorChan <- TypeErrNum
 			log.Println("processor ParseInLocation fail:", err.Error(), ret[4])
 			continue
