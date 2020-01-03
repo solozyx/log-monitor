@@ -24,7 +24,8 @@ type LogProcess struct {
 }
 
 type Message struct {
-	TimeLocal                    time.Time
+	TimeLocal time.Time
+	// 流量
 	BytesSent                    int
 	Method, Path, Scheme, Status string
 	UpstreamTime, RequestTime    float64
